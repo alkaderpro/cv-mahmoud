@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>السيرة الذاتية - محمود أبو المجد</title>
+
+  <!-- خط عربي -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <!-- مكتبة تصدير PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --bg-screen: #e5e7eb;
+      --bg-page: #ffffff;
+      --bg-card: #f9fafb;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.15);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 10px 35px rgba(15, 23, 42, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+      letter-spacing: normal !important;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg-screen);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px 8px;
+      overflow-x: hidden;
+    }
+
+    /* صفحة A4 فعلية */
+    .cv-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg-page);
+      box-shadow: var(--shadow-soft);
+      margin: 0 auto;
+      padding: 12mm 13mm;
+      border-radius: 8px;
+    }
+
+    /* علشان على الموبايل ما يكبرش عن الشاشة */
+    @media (max-width: 900px) {
+      .cv-page {
+        width: 100%;
+        min-height: auto;
+        padding: 14px 10px;
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+
+    .blue-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .blue-dot-lg {
+      width: 9px;
+      height: 9px;
+    }
+
+    /* شريط علوي */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .top-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e0ecff;
+      border: 1px solid #bfdbfe;
+      font-size: 11px;
+      color: #1d4ed8;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .actions-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-outline:hover {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    /* الهيدر */
+    .header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr);
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .header {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .header-main h1 {
+      font-size: 22px;
+      margin-bottom: 4px;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #1e293b;
+    }
+
+    .headline-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #e5edff;
+      border: 1px solid #bfdbfe;
+      font-size: 11px;
+      color: #1d4ed8;
+      margin-bottom: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .header-main p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .header-side {
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+      padding: 8px 9px 9px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      white-space: nowrap;
+      word-break: break-all;
+    }
+
+    .divider-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3px 10px;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .meta-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .meta-item {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .meta-item span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* أقسام الصفحة */
+    .sections-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .sections-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      padding: 9px 10px 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .card-pill {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      white-space: nowrap;
+    }
+
+    /* الخبرات */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 2px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .timeline-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2563eb;
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .timeline-body {
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 6px 7px;
+    }
+
+    .timeline-role {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 1px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      align-items: baseline;
+    }
+
+    .timeline-company {
+      font-size: 11px;
+      color: #1d4ed8;
+    }
+
+    .timeline-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-top: 3px;
+    }
+
+    /* التعليم */
+    .edu-block {
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 6px 7px;
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+
+    .edu-title {
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .edu-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* المهارات واللغات */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      color: var(--text-main);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      margin-bottom: 3px;
+      font-weight: 700;
+      color: #374151;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .extra-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* فوتر */
+    .footer-note {
+      margin-top: 10px;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .footer-note span {
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    /* للطباعة */
+    @page {
+      size: A4;
+      margin: 8mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0;
+      }
+
+      .cv-page {
+        box-shadow: none;
+        margin: 0;
+        width: auto;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .top-bar .actions-row {
+        display: none;
+      }
+
+      .footer-note {
+        font-size: 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- هذا هو العنصر الذي يتحول إلى PDF -->
+  <div class="cv-page" id="cvWrapper">
+
+    <!-- شريط علوي -->
+    <div class="top-bar">
+      <div class="top-badge">
+        <span class="blue-dot"></span>
+        جاهز للعمل فورًا – مشرف تشغيل / أعمال ميدانية
+      </div>
+
+      <div class="actions-row">
+        <button class="btn btn-primary" id="downloadPdfBtn">
+          تحميل السيرة الذاتية PDF
+        </button>
+        <button class="btn btn-outline" onclick="window.print()">
+          طباعة
+        </button>
+      </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="header">
+      <div class="header-main">
+        <h1>محمود أبو المجد</h1>
+        <div class="headline-role">
+          <span class="blue-dot"></span>
+          مشرف تشغيل – أعمال ميدانية
+        </div>
+        <p>
+          شاب طموح وملتزم بالعمل والجودة، أبحث عن فرصة عملية مناسبة لأقدم أفضل أداء وأساهم في نجاح الفريق
+          من خلال الانضباط، وتحمل المسؤولية، والاستعداد الدائم لتعلم مهارات جديدة في بيئة عمل احترافية.
+        </p>
+      </div>
+
+      <aside class="header-side">
+        <div class="contact-row">
+          <div class="contact-item">
+            <span class="blue-dot"></span>
+            01140501771
+          </div>
+          <div class="contact-item">
+            <span class="blue-dot"></span>
+            01019473593
+          </div>
+          <div class="contact-item">
+            <span class="blue-dot"></span>
+            mahmoud553123@gmail.com
+          </div>
+        </div>
+
+        <div class="divider-label">
+          <span class="blue-dot"></span>
+          البيانات الشخصية
+        </div>
+        <div class="meta-grid">
+          <div class="meta-item">
+            تاريخ الميلاد:
+            <span>17 / 06 / 2001</span>
+          </div>
+          <div class="meta-item">
+            الحالة الاجتماعية:
+            <span>متزوج</span>
+          </div>
+          <div class="meta-item">
+            العنوان:
+            <span>قنا – مركز أبو تشت – كوم جابر</span>
+          </div>
+          <div class="meta-item">
+            رخصة القيادة:
+            <span>لا يوجد</span>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <!-- باقي الأقسام -->
+    <main class="sections-grid">
+      <!-- الخبرات + التعليم -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="blue-dot blue-dot-lg"></span>
+            الخبرات العملية
+          </div>
+          <div class="card-pill">خبرة ميدانية متنوعة</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-role">
+                مشرف تشغيل
+                <span class="timeline-company">– شركة أون زرود للنقل</span>
+              </div>
+              <p class="timeline-desc">
+                متابعة حركة المعدات والعاملين، ضمان الالتزام بخطط التشغيل اليومية، ومراقبة سير العمل لتحقيق
+                أعلى مستوى من الكفاءة والالتزام بالتوقيت.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-role">
+                مشرف تشغيل – قسم البحر وحمامات السباحة
+                <span class="timeline-company">– فندق ميراج السياحي</span>
+              </div>
+              <p class="timeline-desc">
+                إدارة فريق التشغيل، متابعة النظافة والسلامة وجودة الخدمة في منطقة البحر وحمامات السباحة،
+                وتنظيم المهام اليومية بما يضمن راحة النزلاء ورضاهم.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-role">
+                مشرف تشغيل
+                <span class="timeline-company">– الشركة الصينية (المواقع الإنشائية)</span>
+              </div>
+              <p class="timeline-desc">
+                الإشراف على العمال داخل المواقع الإنشائية، متابعة تنفيذ الأعمال وفق معايير الجودة والسلامة،
+                والتنسيق بين الفرق المختلفة داخل الموقع.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-role">
+                عامل مواقع
+                <span class="timeline-company">– شركات مختلفة (مثل شركة الشروق والشركة الصينية)</span>
+              </div>
+              <p class="timeline-desc">
+                تنفيذ الأعمال اليدوية في المواقع، دعم الفرق الفنية، الالتزام بتعليمات المشرفين وتعليمات
+                السلامة داخل الموقع، والمساهمة في إنجاز المهام في الوقت المحدد.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <div class="card-header" style="margin-bottom:4px;">
+            <div class="card-title">
+              <span class="blue-dot blue-dot-lg"></span>
+              التعليم
+            </div>
+          </div>
+          <div class="edu-block">
+            <div class="edu-title">بكالوريوس إدارة مشروعات صناعية</div>
+            <div class="edu-meta">
+              تاريخ التخرج: 07 / 07 / 2025
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- المهارات واللغات -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="blue-dot blue-dot-lg"></span>
+            المهارات الشخصية والعملية
+          </div>
+          <div class="card-pill">جاهز للتعلم السريع</div>
+        </div>
+
+        <div>
+          <h3 class="section-subtitle">
+            <span class="blue-dot"></span>
+            المهارات الأساسية
+          </h3>
+          <div class="chips">
+            <div class="chip">
+              <span class="blue-dot"></span>
+              العمل تحت الضغط وتحمل المسؤولية
+            </div>
+            <div class="chip">
+              <span class="blue-dot"></span>
+              العمل ضمن فريق والتواصل الفعال
+            </div>
+            <div class="chip">
+              <span class="blue-dot"></span>
+              الالتزام بالانضباط والمواعيد
+            </div>
+            <div class="chip">
+              <span class="blue-dot"></span>
+              قابلية عالية لتعلم المهارات الجديدة
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <h3 class="section-subtitle">
+            <span class="blue-dot"></span>
+            المهارات التقنية
+          </h3>
+          <div class="chips">
+            <div class="chip">
+              <span class="blue-dot"></span>
+              استخدام الكمبيوتر بمستوى بسيط
+            </div>
+            <div class="chip">
+              <span class="blue-dot"></span>
+              متابعة خطط التشغيل اليومية
+            </div>
+            <div class="chip">
+              <span class="blue-dot"></span>
+              الالتزام بقواعد السلامة في المواقع
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <div class="card-header" style="margin-bottom:4px;">
+            <div class="card-title">
+              <span class="blue-dot blue-dot-lg"></span>
+              اللغات
+            </div>
+          </div>
+          <div class="chips">
+            <div class="chip">
+              <span class="blue-dot"></span>
+              العربية – اللغة الأم
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <div class="card-header" style="margin-bottom:4px;">
+            <div class="card-title">
+              <span class="blue-dot blue-dot-lg"></span>
+              ملاحظات إضافية
+            </div>
+          </div>
+          <p class="extra-text">
+            متاح للعمل في فترات مختلفة، مع استعداد تام للانتقال داخل مصر حسب متطلبات العمل،
+            والمشاركة في فرق تشغيل أو متابعة ميدانية داخل المواقع أو المؤسسات المختلفة.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer-note">
+      تم إعداد هذه السيرة الذاتية لـ
+      <span>محمود أبو المجد</span>
+      بتصميم متجاوب ومناسب للطباعة بجودة واضحة.
+    </div>
+  </div>
+
+  <script>
+    const downloadBtn = document.getElementById("downloadPdfBtn");
+    const cvWrapper = document.getElementById("cvWrapper");
+
+    downloadBtn.addEventListener("click", () => {
+      const opt = {
+        margin:       0,             // بدون هامش إضافي من مكتبة jsPDF
+        filename:     "CV-Mahmoud-Abo-Elmagd.pdf",
+        image:        { type: "jpeg", quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: "mm", format: "a4", orientation: "portrait" }
+      };
+      html2pdf().set(opt).from(cvWrapper).save();
+    });
+  </script>
+</body>
+</html>
